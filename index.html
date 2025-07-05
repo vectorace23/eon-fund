@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eon Fund - Strategic Investing from NYU Students</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Serif+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="eon-fund.jpeg" alt="Eon Fund Logo" class="logo-img">
+                <span class="nav-title">Eon Growth Fund</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#strategy">Strategy</a></li>
+                <li><a href="#performance">Performance</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="#careers">Join</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Long-Value and Opportunistic Investing</h1>
+                <p>We invest in fundamentally sound companies with sustainable competitive advantages, trading at significant discounts to their intrinsic value.</p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <h3>$500k</h3>
+                        <p>AUM</p>
+                    </div>
+                    <div class="stat">
+                        <h3>10%</h3>
+                        <p>Annualized Return
+                        </p>
+                    </div>
+                    <div class="stat">
+                        <h3>6+</h3>
+                        <p>Exceptional New York University Analysts</p>
+                    </div>
+                </div>
+                <div class="hero-buttons">
+                    <a href="#strategy" class="btn btn-primary">Learn Our Strategy</a>
+                    <a href="#careers" class="btn btn-secondary">Join Our Team</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="chart-container">
+                    <canvas id="performanceChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Philosophy</h2>
+                <p>We believe in the power of opportunistic investing</p>
+            </div>
+            <div class="about-grid">
+                <div class="about-card">
+                    <div class="icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Value-First Approach</h3>
+                    <p>We seek companies trading below their intrinsic value, focusing on fundamental analysis rather than market sentiment.</p>
+                </div>
+                <div class="about-card">
+                    <div class="icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Long-Term Horizon</h3>
+                    <p>We invest with a 5-10 year time horizon, allowing compound growth to work in our favor.</p>
+                </div>
+                <div class="about-card">
+                    <div class="icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Risk Management</h3>
+                    <p>Diversification and position sizing help us manage risk while maintaining upside potential.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Strategy Section -->
+    <section id="strategy" class="strategy">
+        <div class="container">
+            <div class="section-header">
+                <h2>Investment Strategy</h2>
+                <p>Our disciplined approach to value investing</p>
+            </div>
+            <div class="strategy-content">
+                <div class="strategy-text">
+                    <h3>Deep Value Analysis</h3>
+                    <p>We conduct thorough fundamental analysis, examining financial statements, competitive positioning, and management quality to identify undervalued opportunities.</p>
+                    
+                    <h3>Quality Focus</h3>
+                    <p>We invest in companies with strong balance sheets, consistent cash flows, and sustainable competitive advantages.</p>
+                    
+                    <h3>Contrarian Thinking</h3>
+                    <p>We're willing to go against the crowd when our analysis suggests the market is mispricing a company's value.</p>
+                </div>
+                <div class="strategy-visual">
+                    <div class="process-steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <h4>Screen</h4>
+                            <p>Identify companies trading at significant discounts to book value or earnings</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <h4>Analyze</h4>
+                            <p>Conduct deep fundamental analysis of business model and financials</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <h4>Value</h4>
+                            <p>Determine intrinsic value using multiple valuation methodologies</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <h4>Invest</h4>
+                            <p>Build positions when margin of safety is sufficient</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance Section -->
+    <section id="performance" class="performance">
+        <div class="container">
+            <div class="section-header">
+                <h2>Performance</h2>
+                <p>Consistent returns through market cycles</p>
+            </div>
+            <div class="performance-grid">
+                <div class="performance-card">
+                    <h3>Fund Performance</h3>
+                    <div class="performance-metrics">
+                        <div class="metric">
+                            <span class="label">1 Year</span>
+                            <span class="value positive">+12.4%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">3 Year</span>
+                            <span class="value positive">+8.7%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">5 Year</span>
+                            <span class="value positive">+11.2%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">10 Year</span>
+                            <span class="value positive">+15.2%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="performance-card">
+                    <h3>Risk Metrics</h3>
+                    <div class="performance-metrics">
+                        <div class="metric">
+                            <span class="label">Sharpe Ratio</span>
+                            <span class="value">1.24</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Max Drawdown</span>
+                            <span class="value negative">-8.3%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Volatility</span>
+                            <span class="value">12.1%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Beta</span>
+                            <span class="value">0.85</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Equity Research Reports Section -->
+    <section id="research" class="research">
+        <div class="container">
+            <div class="section-header">
+                <h2>Equity Research Reports</h2>
+                <p>Our latest research and analysis on equities and markets.</p>
+            </div>
+            <div class="research-grid">
+                <div class="research-card">
+                    <h3>BioMarin Pharmaceutical (BMRN) – Rare Disease Innovation</h3>
+                    <p>In-depth analysis of BioMarin's pipeline, market opportunity in rare diseases, and long-term growth prospects. Includes risk assessment and valuation.</p>
+                    <a href="#" class="btn btn-primary" target="_blank">View Report</a>
+                </div>
+                <div class="research-card">
+                    <h3>Nvidia (NVDA) – AI Leadership and Growth</h3>
+                    <p>Exploring Nvidia's dominance in AI hardware, future growth drivers, and competitive landscape. Includes risk factors and price target.</p>
+                    <a href="#" class="btn btn-primary" target="_blank">View Report</a>
+                </div>
+                <div class="research-card">
+                    <h3>Duolingo (DUOL) – EdTech Disruptor</h3>
+                    <p>Comprehensive review of Duolingo's business model, user growth, monetization strategy, and competitive positioning in the EdTech sector.</p>
+                    <a href="#" class="btn btn-primary" target="_blank">View Report</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="team">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Team</h2>
+                <p>Experienced professionals dedicated to value investing</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-photo">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Ronin</h3>
+                    <p class="title">Principal and Founder</p>
+                    <p>NYU Stern B.S. in Finance and Accounting</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-photo">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Antony</h3>
+                    <p class="title">Senior Analyst</p>
+                    <p>NYU B.A in Economics</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-photo">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Anish</h3>
+                    <p class="title">Analyst</p>
+                    <p>NYU B.A in Economics</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-photo">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Mukund Sundar</h3>
+                    <p class="title">Analyst</p>
+                    <p>NYU B.A in CS and Economics</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-photo">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Ryan Xue</h3>
+                    <p class="title">Analyst</p>
+                    <p>NYU B.A in Data Science and Math</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Careers Section -->
+    <section id="careers" class="careers">
+        <div class="container">
+            <div class="section-header">
+                <h2>Join Our Team</h2>
+                <p>Build your career in value investing</p>
+            </div>
+            <div class="careers-content">
+                <div class="careers-info">
+                    <h3>Analyst Program</h3>
+                    <div class="role-selector">
+                        <label for="roleSelect"><strong>Choose your track:</strong></label>
+                        <select id="roleSelect">
+                            <option value="fundamental">Fundamental Analyst</option>
+                            <option value="quant">Quantitative Trading/Research & Machine Learning</option>
+                        </select>
+                    </div>
+                    <div id="roleInfo">
+                        <div class="role-info fundamental active">
+                            <p>We're looking for exceptional individuals to join our analyst program. This is a unique opportunity to learn value investing from experienced professionals. Individuals from any school and major are welcome to apply. </p>
+                            <div class="benefits">
+                                <h4>What We Offer:</h4>
+                                <ul>
+                                    <li>Hands-on experience in fundamental analysis</li>
+                                    <li>Mentorship from Investment Banking Interns</li>
+                                    <li>Exposure to our complete investment process</li>
+                                    <li>Path to portfolio management roles</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="role-info quant">
+                            <p>Join our Quantitative Trading/Research & Machine Learning team! Work on options, systematic strategies, and advanced data-driven investing. Open to students with strong quantitative, coding, or machine learning backgrounds.</p>
+                            <div class="benefits">
+                                <h4>What We Offer:</h4>
+                                <ul>
+                                    <li>Hands-on experience in quantitative research and trading</li>
+                                    <li>Exposure to options, systematic, and ML-driven strategies</li>
+                                    <li>Opportunities to deploy live strategies</li>
+                                    <li>Preferred Math/CS majors, contact for any questions</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="application-form">
+                    <h3>Apply Now</h3>
+                    <form id="applicationForm">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="education">Education</label>
+                            <input type="text" id="education" name="education" placeholder="University, Degree, Graduation Year">
+                        </div>
+                        <div class="form-group">
+                            <label for="experience">Relevant Experience</label>
+                            <textarea id="experience" name="experience" rows="3" placeholder="Describe your investment, finance, or analytical experience"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="motivation">Why Value Investing?</label>
+                            <textarea id="motivation" name="motivation" rows="3" placeholder="Tell us why you're interested in value investing and our firm"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="resume">Resume/CV</label>
+                            <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit Application</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Contact Us</h2>
+                <p>Interested in partnering with us? Questions? Reach out!</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Address</h4>
+                            <p>NYU Stern School of Business</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Phone</h4>
+                            <p>Coming Soon</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>ms14594@nyu.edu</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>Send us a message</h3>
+                    <form>
+                        <div class="form-group">
+                            <input type="text" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="Your Message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <img src="eon-fund.jpeg" alt="Eon Fund Logo" class="footer-logo">
+                    <p>Long-term value investing for sophisticated investors.</p>
+                    <div class="footer-social">
+                        <a href="https://www.linkedin.com/company/eon-gf/" target="_blank" rel="noopener" aria-label="Eon Growth Fund LinkedIn">
+                            <i class="fab fa-linkedin fa-2x"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#strategy">Strategy</a></li>
+                        <li><a href="#performance">Performance</a></li>
+                        <li><a href="#careers">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Disclosures</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Eon Fund. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 
