@@ -1,4 +1,4 @@
-# Horizon Value Fund Website
+# Eon Growth Fund Website
 
 A beautiful, modern website for a long-only value fund with an analyst program application feature. Built with HTML, CSS, and JavaScript.
 
