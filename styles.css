@@ -894,4 +894,25 @@ body {
 
 .research-card .btn {
     margin-top: auto;
+}
+
+.nyu-uni {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+}
+.nyu-logo {
+    height: 32px;
+    width: 32px;
+    object-fit: contain;
+    display: inline-block;
+}
+.nyu-uni span {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #57068c;
+    letter-spacing: 0.01em;
 } 
