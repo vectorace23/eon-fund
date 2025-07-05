@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Tracker | Eon Growth Fund</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Serif+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .market-container { max-width: 900px; margin: 4rem auto; padding: 2rem; background: rgba(255,255,255,0.95); border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
+        .market-header { text-align: center; margin-bottom: 2rem; }
+        .market-selector { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
+        .market-selector button { padding: 0.5rem 1.5rem; border-radius: 6px; border: none; background: #d4af37; color: #fff; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+        .market-selector button.active, .market-selector button:hover { background: #b8860b; }
+        .market-placeholder { text-align: center; color: #888; margin-top: 2rem; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="eon-fund.jpeg" alt="Eon Fund Logo" class="logo-img">
+                <span class="nav-title">Eon Growth Fund</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#strategy">Strategy</a></li>
+                <li><a href="index.html#performance">Performance</a></li>
+                <li><a href="index.html#team">Team</a></li>
+                <li><a href="index.html#careers">Join</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li><a href="markets.html" class="active">Market Tracker</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="market-container">
+        <div class="market-header">
+            <h1>Market Tracker</h1>
+            <p>Explore historical returns for major indices. (Eon Fund coming soon!)</p>
+        </div>
+        <div class="market-selector">
+            <button class="active" data-index="sp500">S&amp;P 500</button>
+            <button data-index="russell">Russell 2000</button>
+            <button data-index="nasdaq">NASDAQ</button>
+            <button data-index="eon" disabled>Eon Fund (Coming Soon)</button>
+        </div>
+        <canvas id="marketChart" height="80"></canvas>
+    </div>
+
+    <script>
+    // Sample static data for demonstration
+    const marketData = {
+        sp500: {
+            label: 'S&P 500',
+            data: [100, 110, 120, 130, 140, 160, 180, 200, 220, 250, 270, 300],
+            years: [2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024]
+        },
+        russell: {
+            label: 'Russell 2000',
+            data: [100, 108, 115, 120, 130, 140, 150, 160, 170, 180, 190, 200],
+            years: [2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024]
+        },
+        nasdaq: {
+            label: 'NASDAQ',
+            data: [100, 115, 130, 150, 170, 200, 230, 260, 300, 340, 370, 400],
+            years: [2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024]
+        }
+    };
+
+    let currentIndex = 'sp500';
+    const ctx = document.getElementById('marketChart').getContext('2d');
+    let chart = null;
+
+    function renderChart(index) {
+        const d = marketData[index];
+        if (chart) chart.destroy();
+        chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: d.years,
+                datasets: [{
+                    label: d.label + ' (Indexed to 100)',
+                    data: d.data,
+                    borderColor: '#d4af37',
+                    backgroundColor: 'rgba(212,175,55,0.08)',
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    tension: 0.2,
+                    fill: true,
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: true, labels: { font: { family: 'Playfair Display', size: 16 } } },
+                    tooltip: { enabled: true }
+                },
+                scales: {
+                    x: { title: { display: true, text: 'Year', font: { family: 'Source Serif Pro', size: 14 } } },
+                    y: { title: { display: true, text: 'Indexed Value', font: { family: 'Source Serif Pro', size: 14 } } }
+                }
+            }
+        });
+    }
+
+    document.querySelectorAll('.market-selector button').forEach(btn => {
+        btn.addEventListener('click', function() {
+            if (this.disabled) return;
+            document.querySelectorAll('.market-selector button').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            currentIndex = this.getAttribute('data-index');
+            renderChart(currentIndex);
+        });
+    });
+
+    // Initial render
+    renderChart(currentIndex);
+    </script>
+</body>
+</html> 
