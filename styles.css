@@ -898,21 +898,23 @@ body {
 
 .nyu-uni {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
-    justify-content: center;
-    margin-bottom: 0.75rem;
+    gap: 0.3rem;
+    margin-bottom: 1rem;
 }
 .nyu-logo {
-    height: 32px;
-    width: 32px;
+    height: 48px;
+    width: 48px;
     object-fit: contain;
-    display: inline-block;
+    display: block;
+    margin-bottom: 0.2rem;
 }
 .nyu-uni span {
     font-family: 'Playfair Display', serif;
-    font-size: 1.05rem;
-    font-weight: 600;
+    font-size: 1.1rem;
+    font-weight: 700;
     color: #57068c;
     letter-spacing: 0.01em;
+    text-align: center;
 } 
