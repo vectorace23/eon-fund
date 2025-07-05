@@ -326,7 +326,7 @@
                 </div>
                 <div class="application-form">
                     <h3>Apply Now</h3>
-                    <form id="applicationForm">
+                    <form id="applicationForm" action="https://formspree.io/f/xwpbjbva" method="POST">
                         <div class="form-group">
                             <label for="name">Full Name</label>
                             <input type="text" id="name" name="name" required>
@@ -355,6 +355,7 @@
                             <label for="resume">Resume/CV</label>
                             <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx">
                         </div>
+                        <input type="hidden" name="_captcha" value="false">
                         <button type="submit" class="btn btn-primary">Submit Application</button>
                     </form>
                 </div>
