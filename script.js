@@ -109,20 +109,6 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(el);
     });
     
-    // Performance chart placeholder
-    const chartContainer = document.querySelector('.chart-container');
-    if (chartContainer) {
-        // Create a simple performance chart using CSS
-        chartContainer.innerHTML = `
-            <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: white;">
-                <div style="text-align: center;">
-                    <div style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem;">Fund Performance</div>
-                    <div style="font-size: 0.9rem; opacity: 0.8;">Interactive chart coming soon</div>
-                </div>
-            </div>
-        `;
-    }
-    
     // Add hover effects for buttons
     const buttons = document.querySelectorAll('.btn');
     buttons.forEach(button => {
