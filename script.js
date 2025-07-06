@@ -157,6 +157,25 @@ document.addEventListener('DOMContentLoaded', function() {
             if (activePanel) activePanel.classList.add('active');
         });
     }
+    
+    // Show/hide GitHub/portfolio field for quant track
+    if (roleSelect) {
+        roleSelect.addEventListener('change', function() {
+            const quantField = document.querySelector('.quant-only');
+            if (this.value === 'quant') {
+                quantField.style.display = '';
+            } else {
+                quantField.style.display = 'none';
+            }
+        });
+        // On page load, set correct visibility
+        const quantField = document.querySelector('.quant-only');
+        if (roleSelect.value === 'quant') {
+            quantField.style.display = '';
+        } else {
+            quantField.style.display = 'none';
+        }
+    }
 });
 
 // Add CSS for mobile menu
