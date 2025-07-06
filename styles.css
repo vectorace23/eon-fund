@@ -524,6 +524,18 @@ body {
     line-height: 1.6;
 }
 
+.linkedin-btn {
+    margin-left: 0.5em;
+    color: #0a66c2;
+    text-decoration: none;
+    vertical-align: middle;
+    transition: color 0.2s;
+}
+
+.linkedin-btn:hover {
+    color: #004182;
+}
+
 /* Careers Section */
 .careers {
     padding: 6rem 0;
