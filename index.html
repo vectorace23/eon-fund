@@ -61,8 +61,21 @@
                 </div>
             </div>
             <div class="hero-visual">
-                <div class="chart-container">
-                    <canvas id="performanceChart"></canvas>
+                <div class="chart-container" style="position: relative;">
+                  <lottie-player
+                    id="heroLottie"
+                    src="Animation - 1751841814227.lottie"
+                    background="transparent"
+                    speed="1"
+                    style="width: 100%; height: 100%;"
+                    autoplay
+                  ></lottie-player>
+                  <img
+                    id="eonLogo"
+                    src="eon-fund.jpeg"
+                    alt="Eon Fund Logo"
+                    style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 120px; opacity: 0; transition: opacity 1s;"
+                  />
                 </div>
             </div>
         </div>
@@ -472,7 +485,7 @@
                 <div class="footer-section">
                     <h4>Legal</h4>
                     <ul>
-                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#" onclick="document.getElementById('privacy-policy').style.display='block'; return false;">Privacy Policy</a></li>
                         <li><a href="#">Terms of Service</a></li>
                         <li><a href="#">Disclosures</a></li>
                     </ul>
@@ -484,6 +497,36 @@
         </div>
     </footer>
 
+    <!-- Privacy Policy Modal/Section -->
+    <div id="privacy-policy" class="modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); z-index:9999; overflow:auto;">
+      <div style="background:#fff; max-width:700px; margin:4rem auto; padding:2.5rem 2rem; border-radius:10px; position:relative;">
+        <button onclick="document.getElementById('privacy-policy').style.display='none'" style="position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+        <h2>Privacy Policy</h2>
+        <p><strong>Effective Date: 07/06/2025</strong></p>
+        <p>Eon Growth Fund values your privacy and is committed to protecting your personal information. This Privacy Policy explains how we collect, use, and safeguard your data when you visit our website, <a href="https://www.eongrowthfund.com" target="_blank">https://www.eongrowthfund.com</a>. By using our site, you agree to the practices described here.</p>
+        <p>We collect information you voluntarily provide, such as your name, email address, phone number, or company affiliation when you fill out a contact form or communicate with us. In addition, we may automatically gather technical data like your IP address, browser type, and usage behavior through cookies and analytics tools to improve our website's performance and user experience.</p>
+        <p>We use this information to communicate with you, respond to inquiries, provide updates (if you opt in), and ensure compliance with applicable laws. We do not sell or rent your information. We may share data with trusted third-party service providers who help us operate the website, or with legal authorities if required to protect our rights or comply with legal obligations.</p>
+        <p>Cookies may be used to enhance functionality and analyze traffic. You can disable cookies through your browser settings, but doing so may affect your ability to use certain features on our site.</p>
+        <p>We take reasonable precautions to protect your personal data, but no online system is 100% secure. Depending on your jurisdiction, you may have rights regarding your personal information, such as accessing, correcting, or deleting it. To make a request, please contact us using the form available on the main website.</p>
+        <p>Our website may contain links to third-party sites. We are not responsible for their content or privacy practices.</p>
+        <p>We do not represent NYU.</p>
+        <p>This policy may be updated occasionally, and any changes will be posted here with a new effective date. For questions or concerns about this Privacy Policy or your data, please contact us at:</p>
+        <p><strong>Eon Growth Fund</strong><br>Website: <a href="https://www.eongrowthfund.com" target="_blank">https://www.eongrowthfund.com</a></p>
+      </div>
+    </div>
+
     <script src="script.js"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script>
+      const lottie = document.getElementById('heroLottie');
+      const logo = document.getElementById('eonLogo');
+      if (lottie && logo) {
+        lottie.addEventListener('complete', () => {
+          logo.style.opacity = 1;
+        });
+        // If your animation loops, use this instead:
+        // setTimeout(() => { logo.style.opacity = 1; }, 2500);
+      }
+    </script>
 </body>
 </html> 
