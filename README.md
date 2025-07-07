@@ -52,7 +52,7 @@ A beautiful, modern website for a long-only value fund with an analyst program a
 ### Branding
 - **Company Name**: Update "Horizon Value Fund" in `index.html`
 - **Colors**: Modify the gradient colors in `styles.css` (search for `#667eea` and `#764ba2`)
-- **Logo**: Replace the text logo with your company logo
+- **Logo**: Replace the text logo with your company logo (EonFund.png)
 
 ### Content
 - **Statistics**: Update the hero section statistics with your fund's actual numbers

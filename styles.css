@@ -6,12 +6,18 @@
 }
 
 body {
+    background: #f8f7f3;
+    color: #14223d;
     font-family: 'Source Serif Pro', 'Georgia', serif;
     line-height: 1.6;
-    color: #333;
     overflow-x: hidden;
     font-weight: 400;
     letter-spacing: 0.01em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    color: #14223d;
 }
 
 .container {
@@ -25,8 +31,8 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
+    background: #f8f7f3;
+    box-shadow: 0 2px 12px rgba(20,34,61,0.04);
     z-index: 1000;
     padding: 1rem 0;
     transition: all 0.3s ease;
@@ -48,22 +54,21 @@ body {
 }
 
 .nav-title {
-    font-family: 'Playfair Display', serif;
     font-size: 1.35rem;
     font-weight: 700;
-    color: #1a1a1a;
+    color: #14223d;
     letter-spacing: -0.5px;
     white-space: nowrap;
 }
 
 .logo-img {
-    height: 40px;
+    height: 48px;
     width: auto;
     object-fit: contain;
 }
 
 .footer-logo {
-    height: 50px;
+    height: 40px;
     width: auto;
     object-fit: contain;
     margin-bottom: 1rem;
@@ -77,9 +82,9 @@ body {
 
 .nav-menu a {
     text-decoration: none;
-    color: #333;
+    color: #14223d;
     font-weight: 500;
-    transition: color 0.3s ease;
+    transition: color 0.2s;
 }
 
 .nav-menu a:hover {
@@ -103,10 +108,10 @@ body {
 /* Hero Section */
 .hero {
     min-height: 100vh;
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2d2d2d 100%);
+    background: #f8f7f3;
+    padding: 6rem 0 2rem 0;
     display: flex;
     align-items: center;
-    padding-top: 80px;
     position: relative;
     overflow: hidden;
 }
@@ -134,45 +139,42 @@ body {
 
 .hero-content h1 {
     font-size: 3.5rem;
-    font-weight: 700;
-    color: white;
+    color: #14223d;
     margin-bottom: 1.5rem;
     line-height: 1.2;
-    font-family: 'Playfair Display', serif;
 }
 
 .hero-content p {
-    font-size: 1.2rem;
-    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.25rem;
+    color: #14223d;
     margin-bottom: 2rem;
     line-height: 1.6;
 }
 
 .hero-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
     gap: 2rem;
-    margin-bottom: 2rem;
+    margin: 2rem 0;
 }
 
 .stat {
-    text-align: center;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 1.5rem;
+    background: #fff;
+    border: 1px solid #e3e6ed;
     border-radius: 12px;
-    backdrop-filter: blur(10px);
+    padding: 1.5rem 2.5rem;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(20,34,61,0.04);
 }
 
 .stat h3 {
+    color: #14223d;
     font-size: 2rem;
-    font-weight: 700;
-    color: white;
     margin-bottom: 0.5rem;
 }
 
 .stat p {
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 0.9rem;
+    color: #14223d;
+    font-size: 1rem;
 }
 
 .hero-buttons {
@@ -181,39 +183,36 @@ body {
 }
 
 .btn {
-    padding: 1rem 2rem;
-    border-radius: 8px;
-    text-decoration: none;
+    background: #14223d;
+    color: #fff;
+    border-radius: 6px;
+    padding: 0.75rem 2rem;
     font-weight: 600;
-    transition: all 0.3s ease;
-    display: inline-block;
+    border: none;
+    transition: background 0.2s, color 0.2s;
+    margin-right: 1rem;
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
-    color: white;
-    border: none;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    font-size: 0.9rem;
+    background: #14223d;
+    color: #fff;
 }
 
 .btn-primary:hover {
-    background: linear-gradient(135deg, #b8860b 0%, #d4af37 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+    background: #d4af37;
+    color: #14223d;
 }
 
 .btn-secondary {
-    background: transparent;
-    color: white;
-    border: 2px solid white;
+    background: #fff;
+    color: #14223d;
+    border: 1px solid #14223d;
 }
 
 .btn-secondary:hover {
-    background: white;
-    color: #2563eb;
+    background: #d4af37;
+    color: #14223d;
+    border-color: #d4af37;
 }
 
 .hero-visual {
@@ -225,9 +224,8 @@ body {
 .chart-container {
     width: 100%;
     height: 300px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    backdrop-filter: blur(10px);
+    background: none !important;
+    box-shadow: none !important;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -243,16 +241,14 @@ body {
 
 .section-header h2 {
     font-size: 2.5rem;
-    font-weight: 700;
-    color: #1a1a1a;
+    color: #14223d;
     margin-bottom: 1rem;
     letter-spacing: -0.02em;
-    font-family: 'Playfair Display', serif;
 }
 
 .section-header p {
     font-size: 1.1rem;
-    color: #666;
+    color: #14223d;
     max-width: 600px;
     margin: 0 auto;
 }
@@ -260,7 +256,10 @@ body {
 /* About Section */
 .about {
     padding: 6rem 0;
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    background: #fff;
+    border-radius: 18px;
+    margin: 2rem 0;
+    box-shadow: 0 2px 24px rgba(20,34,61,0.06);
 }
 
 .about-grid {
@@ -270,13 +269,12 @@ body {
 }
 
 .about-card {
-    background: rgba(255, 255, 255, 0.95);
+    background: #fff;
     padding: 2.5rem;
-    border-radius: 8px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(20,34,61,0.04);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
+    border: 1px solid #e3e6ed;
 }
 
 .about-card:hover {
@@ -305,19 +303,21 @@ body {
     font-size: 1.3rem;
     font-weight: 600;
     margin-bottom: 1rem;
-    color: #1a1a1a;
-    font-family: 'Playfair Display', serif;
+    color: #14223d;
 }
 
 .about-card p {
-    color: #666;
+    color: #14223d;
     line-height: 1.6;
 }
 
 /* Strategy Section */
 .strategy {
     padding: 6rem 0;
-    background: white;
+    background: #fff;
+    border-radius: 18px;
+    margin: 2rem 0;
+    box-shadow: 0 2px 24px rgba(20,34,61,0.06);
 }
 
 .strategy-content {
@@ -330,10 +330,9 @@ body {
 .strategy-text h3 {
     font-size: 1.5rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: #14223d;
     margin-bottom: 1rem;
     margin-top: 2rem;
-    font-family: 'Playfair Display', serif;
 }
 
 .strategy-text h3:first-child {
@@ -341,7 +340,7 @@ body {
 }
 
 .strategy-text p {
-    color: #666;
+    color: #14223d;
     line-height: 1.6;
     margin-bottom: 2rem;
 }
@@ -385,13 +384,12 @@ body {
 .step h4 {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: #14223d;
     margin-bottom: 0.5rem;
-    font-family: 'Playfair Display', serif;
 }
 
 .step p {
-    color: #666;
+    color: #14223d;
     font-size: 0.9rem;
     line-height: 1.5;
 }
@@ -399,7 +397,10 @@ body {
 /* Performance Section */
 .performance {
     padding: 6rem 0;
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    background: #fff;
+    border-radius: 18px;
+    margin: 2rem 0;
+    box-shadow: 0 2px 24px rgba(20,34,61,0.06);
 }
 
 .performance-grid {
@@ -409,20 +410,18 @@ body {
 }
 
 .performance-card {
-    background: rgba(255, 255, 255, 0.95);
+    background: #fff;
     padding: 2.5rem;
-    border-radius: 8px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(20,34,61,0.04);
+    border: 1px solid #e3e6ed;
 }
 
 .performance-card h3 {
     font-size: 1.3rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: #14223d;
     margin-bottom: 2rem;
-    font-family: 'Playfair Display', serif;
 }
 
 .performance-metrics {
@@ -444,7 +443,7 @@ body {
 
 .metric .label {
     font-weight: 500;
-    color: #666;
+    color: #14223d;
 }
 
 .metric .value {
@@ -463,7 +462,10 @@ body {
 /* Team Section */
 .team {
     padding: 6rem 0;
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    background: #fff;
+    border-radius: 18px;
+    margin: 2rem 0;
+    box-shadow: 0 2px 24px rgba(20,34,61,0.06);
 }
 
 .team-grid {
@@ -475,12 +477,11 @@ body {
 .team-member {
     text-align: center;
     padding: 2rem;
-    border-radius: 8px;
+    border-radius: 12px;
     transition: transform 0.3s ease;
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
+    background: #fff;
+    box-shadow: 0 2px 12px rgba(20,34,61,0.04);
+    border: 1px solid #e3e6ed;
 }
 
 .team-member:hover {
@@ -508,38 +509,36 @@ body {
 .team-member h3 {
     font-size: 1.3rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: #14223d;
     margin-bottom: 0.5rem;
-    font-family: 'Playfair Display', serif;
 }
 
 .team-member .title {
-    color: #d4af37;
+    color: #14223d;
     font-weight: 500;
     margin-bottom: 1rem;
 }
 
 .team-member p {
-    color: #666;
+    color: #14223d;
     line-height: 1.6;
 }
 
-.linkedin-btn {
-    margin-left: 0.5em;
-    color: #0a66c2;
-    text-decoration: none;
-    vertical-align: middle;
-    transition: color 0.2s;
+.team-member .linkedin-btn {
+    color: #d4af37;
 }
 
-.linkedin-btn:hover {
-    color: #004182;
+.team-member .linkedin-btn:hover {
+    color: #14223d;
 }
 
 /* Careers Section */
 .careers {
     padding: 6rem 0;
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    background: #fff;
+    border-radius: 18px;
+    margin: 2rem 0;
+    box-shadow: 0 2px 24px rgba(20,34,61,0.06);
 }
 
 .careers-content {
@@ -552,13 +551,12 @@ body {
 .careers-info h3 {
     font-size: 1.5rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: #14223d;
     margin-bottom: 1rem;
-    font-family: 'Playfair Display', serif;
 }
 
 .careers-info p {
-    color: #666;
+    color: #14223d;
     line-height: 1.6;
     margin-bottom: 2rem;
 }
@@ -566,9 +564,8 @@ body {
 .benefits h4 {
     font-size: 1.2rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: #14223d;
     margin-bottom: 1rem;
-    font-family: 'Playfair Display', serif;
 }
 
 .benefits ul {
@@ -576,7 +573,7 @@ body {
 }
 
 .benefits li {
-    color: #666;
+    color: #14223d;
     line-height: 1.6;
     margin-bottom: 0.5rem;
     padding-left: 1.5rem;
@@ -593,20 +590,18 @@ body {
 
 /* Form Styles */
 .application-form {
-    background: rgba(255, 255, 255, 0.95);
+    background: #fff;
     padding: 2.5rem;
-    border-radius: 8px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(20,34,61,0.04);
+    border: 1px solid #e3e6ed;
 }
 
 .application-form h3 {
     font-size: 1.3rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: #14223d;
     margin-bottom: 2rem;
-    font-family: 'Playfair Display', serif;
 }
 
 .form-group {
@@ -616,7 +611,7 @@ body {
 .form-group label {
     display: block;
     font-weight: 500;
-    color: #1a1a1a;
+    color: #14223d;
     margin-bottom: 0.5rem;
 }
 
@@ -643,7 +638,10 @@ body {
 /* Contact Section */
 .contact {
     padding: 6rem 0;
-    background: white;
+    background: #fff;
+    border-radius: 18px;
+    margin: 2rem 0;
+    box-shadow: 0 2px 24px rgba(20,34,61,0.06);
 }
 
 .contact-content {
@@ -679,38 +677,36 @@ body {
 .contact-item h4 {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: #14223d;
     margin-bottom: 0.5rem;
-    font-family: 'Playfair Display', serif;
 }
 
 .contact-item p {
-    color: #666;
+    color: #14223d;
     line-height: 1.6;
 }
 
 .contact-form {
-    background: rgba(255, 255, 255, 0.95);
+    background: #fff;
     padding: 2.5rem;
-    border-radius: 8px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(20,34,61,0.04);
+    border: 1px solid #e3e6ed;
 }
 
 .contact-form h3 {
     font-size: 1.3rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: #14223d;
     margin-bottom: 2rem;
-    font-family: 'Playfair Display', serif;
 }
 
 /* Footer */
 .footer {
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-    color: white;
+    background: #f8f7f3;
+    color: #14223d;
     padding: 3rem 0 1rem;
+    border-top: 1px solid #e3e6ed;
 }
 
 .footer-content {
@@ -723,11 +719,11 @@ body {
 .footer-section h3,
 .footer-section h4 {
     margin-bottom: 1rem;
-    color: white;
+    color: #14223d;
 }
 
 .footer-section p {
-    color: #a1a1aa;
+    color: #14223d;
     line-height: 1.6;
 }
 
@@ -740,20 +736,20 @@ body {
 }
 
 .footer-section ul li a {
-    color: #a1a1aa;
+    color: #14223d;
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .footer-section ul li a:hover {
-    color: white;
+    color: #d4af37;
 }
 
 .footer-bottom {
-    border-top: 1px solid #333;
+    border-top: 1px solid #e3e6ed;
     padding-top: 1rem;
     text-align: center;
-    color: #a1a1aa;
+    color: #14223d;
 }
 
 .footer-social {
@@ -768,7 +764,7 @@ body {
 }
 
 .footer-social a:hover {
-    color: #b8860b;
+    color: #14223d;
 }
 
 /* Responsive Design */
@@ -787,7 +783,7 @@ body {
     }
     
     .hero-content h1 {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
     }
     
     .hero-stats {
@@ -816,7 +812,23 @@ body {
     }
     
     .section-header h2 {
-        font-size: 2rem;
+        font-size: 1.5rem;
+    }
+    
+    .stat h3 {
+        font-size: 1.3rem;
+    }
+    
+    .about, .strategy, .performance, .team, .careers, .contact, .research {
+        padding: 2rem 0;
+    }
+    
+    .chart-container {
+        height: 180px !important;
+    }
+    
+    #eonLogo {
+        width: 120px !important;
     }
 }
 
@@ -860,7 +872,10 @@ body {
 
 .research {
     padding: 6rem 0;
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    background: #fff;
+    border-radius: 18px;
+    margin: 2rem 0;
+    box-shadow: 0 2px 24px rgba(20,34,61,0.06);
 }
 
 .research-grid {
@@ -870,11 +885,10 @@ body {
 }
 
 .research-card {
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 8px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(20,34,61,0.04);
+    border: 1px solid #e3e6ed;
     padding: 2rem;
     display: flex;
     flex-direction: column;
@@ -891,14 +905,13 @@ body {
 
 .research-card h3 {
     font-size: 1.2rem;
-    font-family: 'Playfair Display', serif;
     font-weight: 700;
     margin-bottom: 1rem;
-    color: #1a1a1a;
+    color: #14223d;
 }
 
 .research-card p {
-    color: #444;
+    color: #14223d;
     margin-bottom: 1.5rem;
     font-size: 1rem;
     line-height: 1.6;
