@@ -20,11 +20,18 @@ document.addEventListener('DOMContentLoaded', function() {
             const targetSection = document.querySelector(targetId);
             
             if (targetSection) {
-                const offsetTop = targetSection.offsetTop - 80; // Account for fixed navbar
-                window.scrollTo({
-                    top: offsetTop,
-                    behavior: 'smooth'
-                });
+                // Get navbar height dynamically and add some padding
+                const navbar = document.querySelector('.navbar');
+                const navbarHeight = navbar ? navbar.offsetHeight : 80;
+                const offsetTop = targetSection.offsetTop - navbarHeight - 20; // Account for fixed navbar + padding
+                
+                // Add a small delay to ensure smooth scrolling
+                setTimeout(() => {
+                    window.scrollTo({
+                        top: Math.max(0, offsetTop), // Ensure we don't scroll to negative values
+                        behavior: 'smooth'
+                    });
+                }, 100);
                 
                 // Close mobile menu if open
                 if (navMenu.classList.contains('active')) {
