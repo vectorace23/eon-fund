@@ -631,6 +631,7 @@ h1, h2, h3, h4, h5, h6 {
     border: 2px solid #e2e8f0;
     border-radius: 8px;
     font-size: 1rem;
+    font-family: 'Source Serif Pro', 'Georgia', serif;
     transition: border-color 0.3s ease;
 }
 
