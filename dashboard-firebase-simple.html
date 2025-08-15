@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EON Internal Platform - Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Serif+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Firebase SDK - Using the latest version -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, addDoc, onSnapshot, orderBy, query, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCJNU4lHbW5z1VLnO7xRbe6VPKqjMs4dGc",
+            authDomain: "eon-cap-chat.firebaseapp.com",
+            projectId: "eon-cap-chat",
+            storageBucket: "eon-cap-chat.firebasestorage.app",
+            messagingSenderId: "277984889021",
+            appId: "1:277984889021:web:b7e69c310e159079a7cfd4",
+            measurementId: "G-6EY6KZER45"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        
+        // Make Firebase available globally
+        window.firebaseApp = app;
+        window.firestoreDB = db;
+        window.firestoreFunctions = {
+            collection,
+            addDoc,
+            onSnapshot,
+            orderBy,
+            query,
+            serverTimestamp
+        };
+        
+        console.log('Firebase initialized successfully!');
+    </script>
+    
+    <style>
+        body {
+            background: #f8f7f3;
+            margin: 0;
+            font-family: 'Source Serif Pro', serif;
+        }
+        
+        .dashboard-header {
+            background: #14223d;
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .dashboard-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .dashboard-logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .dashboard-logo img {
+            height: 40px;
+            width: auto;
+        }
+        
+        .dashboard-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .user-role {
+            background: #d4af37;
+            color: #14223d;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .logout-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+        }
+        
+        .sidebar {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+        
+        .sidebar h3 {
+            color: #14223d;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .online-users {
+            margin-bottom: 2rem;
+        }
+        
+        .user-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            transition: background 0.3s ease;
+        }
+        
+        .user-item:hover {
+            background: #f8f7f3;
+        }
+        
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .user-status {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            margin-left: auto;
+        }
+        
+        .user-name {
+            font-weight: 500;
+            color: #14223d;
+        }
+        
+        .user-role-small {
+            font-size: 0.8rem;
+            color: #6b7280;
+        }
+        
+        .main-content {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .chat-header {
+            background: #f8f7f3;
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .chat-header h2 {
+            color: #14223d;
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        
+        .message-count {
+            background: #d4af37;
+            color: #14223d;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+        
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 1.5rem;
+            background: #fafafa;
+        }
+        
+        .message {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .message-avatar {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+        
+        .message-content {
+            flex: 1;
+        }
+        
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .message-author {
+            font-weight: 600;
+            color: #14223d;
+        }
+        
+        .message-time {
+            font-size: 0.8rem;
+            color: #6b7280;
+        }
+        
+        .message-text {
+            background: white;
+            padding: 0.8rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            color: #374151;
+            line-height: 1.5;
+        }
+        
+        .message.own-message {
+            flex-direction: row-reverse;
+        }
+        
+        .message.own-message .message-text {
+            background: #d4af37;
+            color: white;
+        }
+        
+        .chat-input {
+            padding: 1.5rem;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .chat-form {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .chat-input-field {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            resize: none;
+            transition: border-color 0.3s ease;
+        }
+        
+        .chat-input-field:focus {
+            outline: none;
+            border-color: #d4af37;
+        }
+        
+        .send-btn {
+            background: #d4af37;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .send-btn:hover {
+            background: #b8860b;
+            transform: translateY(-1px);
+        }
+        
+        .send-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .quick-actions {
+            margin-top: 1.5rem;
+        }
+        
+        .quick-actions h4 {
+            color: #14223d;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+        
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .action-btn {
+            background: #f8f7f3;
+            border: 1px solid #e5e7eb;
+            color: #14223d;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+        
+        .action-btn:hover {
+            background: #d4af37;
+            color: white;
+            border-color: #d4af37;
+        }
+        
+        .connection-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 1000;
+        }
+        
+        .connection-status.connected {
+            background: #10b981;
+            color: white;
+        }
+        
+        .connection-status.disconnected {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .error-message {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .sidebar {
+                order: 2;
+            }
+            
+            .main-content {
+                order: 1;
+            }
+            
+            .dashboard-nav {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .user-info {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Connection Status Indicator -->
+    <div id="connectionStatus" class="connection-status disconnected">
+        <i class="fas fa-wifi"></i> Connecting...
+    </div>
+
+    <header class="dashboard-header">
+        <nav class="dashboard-nav">
+            <div class="dashboard-logo">
+                <img src="EonFund.png" alt="EON Capital Management">
+                <span class="dashboard-title">EON Internal Platform</span>
+            </div>
+            <div class="user-info">
+                <div class="user-role" id="userRole">Loading...</div>
+                <span id="userName">Loading...</span>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="online-users">
+                <h3><i class="fas fa-users"></i> Team Members</h3>
+                <div id="usersList">
+                    <!-- Users will be populated here -->
+                </div>
+            </div>
+            
+            <div class="quick-actions">
+                <h4><i class="fas fa-bolt"></i> Quick Actions</h4>
+                <div class="action-buttons">
+                    <button class="action-btn" onclick="showMarketUpdate()">
+                        <i class="fas fa-chart-line"></i> Market Update
+                    </button>
+                    <button class="action-btn" onclick="showPortfolioStatus()">
+                        <i class="fas fa-briefcase"></i> Portfolio Status
+                    </button>
+                    <button class="action-btn" onclick="showResearchNotes()">
+                        <i class="fas fa-file-alt"></i> Research Notes
+                    </button>
+                    <button class="action-btn" onclick="showMeetingSchedule()">
+                        <i class="fas fa-calendar"></i> Meeting Schedule
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="chat-header">
+                <h2><i class="fas fa-comments"></i> Team Chat <span id="messageCount" class="message-count">(0)</span></h2>
+            </div>
+            
+            <div id="errorContainer"></div>
+            
+            <div class="chat-messages" id="chatMessages">
+                <!-- Messages will be populated here -->
+            </div>
+            
+            <div class="chat-input">
+                <form class="chat-form" id="chatForm">
+                    <textarea 
+                        class="chat-input-field" 
+                        id="messageInput" 
+                        placeholder="Type your message here..." 
+                        rows="2"
+                        required
+                    ></textarea>
+                    <button type="submit" class="send-btn" id="sendBtn">
+                        <i class="fas fa-paper-plane"></i> Send
+                    </button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Wait for Firebase to be ready
+        function waitForFirebase() {
+            return new Promise((resolve) => {
+                if (window.firestoreDB) {
+                    resolve();
+                } else {
+                    const checkInterval = setInterval(() => {
+                        if (window.firestoreDB) {
+                            clearInterval(checkInterval);
+                            resolve();
+                        }
+                    }, 100);
+                }
+            });
+        }
+
+        // Check authentication
+        function checkAuth() {
+            const session = localStorage.getItem('eonUserSession');
+            if (!session) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            const userData = JSON.parse(session);
+            document.getElementById('userName').textContent = userData.name;
+            document.getElementById('userRole').textContent = userData.role;
+            
+            return userData;
+        }
+
+        // Initialize dashboard
+        let currentUser = null;
+        let messages = [];
+        let unsubscribe = null;
+
+        // Team members data
+        const teamMembers = [
+            { username: 'ronin', name: 'Ronin Lee', role: 'Principal', online: true },
+            { username: 'antony', name: 'Antony Pfaffle', role: 'President', online: true },
+            { username: 'mukund', name: 'Mukund Sundar', role: 'Co-Head Long-Short', online: true },
+            { username: 'ryan', name: 'Ryan Xue', role: 'Co-Head Long-Short', online: true },
+            { username: 'anish', name: 'Anish Gopalan', role: 'Analyst', online: false },
+            { username: 'kelly', name: 'Kelly Parker', role: 'Analyst', online: true },
+            { username: 'anirudh', name: 'Anirudh Guduru', role: 'Analyst', online: false }
+        ];
+
+        // Populate users list
+        function populateUsers() {
+            const usersList = document.getElementById('usersList');
+            usersList.innerHTML = '';
+            
+            teamMembers.forEach(member => {
+                const userItem = document.createElement('div');
+                userItem.className = 'user-item';
+                userItem.innerHTML = `
+                    <div class="user-avatar">${member.name.charAt(0)}</div>
+                    <div>
+                        <div class="user-name">${member.name}</div>
+                        <div class="user-role-small">${member.role}</div>
+                    </div>
+                    <div class="user-status" style="background: ${member.online ? '#10b981' : '#9ca3af'}"></div>
+                `;
+                usersList.appendChild(userItem);
+            });
+        }
+
+        // Load messages from Firebase
+        async function loadMessages() {
+            try {
+                const { collection, onSnapshot, orderBy, query } = window.firestoreFunctions;
+                
+                // Listen for real-time updates
+                const q = query(collection(window.firestoreDB, 'eon-chat'), orderBy('timestamp', 'asc'));
+                
+                unsubscribe = onSnapshot(q, (snapshot) => {
+                    messages = [];
+                    snapshot.forEach((doc) => {
+                        messages.push({ id: doc.id, ...doc.data() });
+                    });
+                    displayMessages();
+                    updateConnectionStatus(true);
+                }, (error) => {
+                    console.error("Error loading messages:", error);
+                    updateConnectionStatus(false);
+                    showError('Failed to load messages: ' + error.message);
+                });
+            } catch (error) {
+                console.error("Error setting up message listener:", error);
+                showError('Failed to setup message listener: ' + error.message);
+            }
+        }
+
+        // Save message to Firebase
+        async function saveMessage(messageData) {
+            try {
+                const { collection, addDoc, serverTimestamp } = window.firestoreFunctions;
+                
+                await addDoc(collection(window.firestoreDB, 'eon-chat'), {
+                    author: messageData.author,
+                    role: messageData.role,
+                    text: messageData.text,
+                    time: messageData.time,
+                    username: messageData.username,
+                    timestamp: serverTimestamp()
+                });
+            } catch (error) {
+                console.error("Error saving message:", error);
+                showError('Failed to send message: ' + error.message);
+            }
+        }
+
+        // Display messages
+        function displayMessages() {
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = '';
+            
+            // Update message count
+            document.getElementById('messageCount').textContent = `(${messages.length})`;
+            
+            messages.forEach(message => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${message.username === currentUser.username ? 'own-message' : ''}`;
+                
+                const time = message.time || (message.timestamp ? new Date(message.timestamp.toDate()).toLocaleTimeString() : 'Just now');
+                
+                messageDiv.innerHTML = `
+                    <div class="message-avatar">${message.author.charAt(0)}</div>
+                    <div class="message-content">
+                        <div class="message-header">
+                            <span class="message-author">${message.author}</span>
+                            <span class="message-role">${message.role}</span>
+                            <span class="message-time">${time}</span>
+                        </div>
+                        <div class="message-text">${message.text}</div>
+                    </div>
+                `;
+                
+                chatMessages.appendChild(messageDiv);
+            });
+            
+            // Scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Show error message
+        function showError(message) {
+            const errorContainer = document.getElementById('errorContainer');
+            errorContainer.innerHTML = `<div class="error-message">${message}</div>`;
+            setTimeout(() => {
+                errorContainer.innerHTML = '';
+            }, 5000);
+        }
+
+        // Handle chat form submission
+        document.getElementById('chatForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const messageInput = document.getElementById('messageInput');
+            const messageText = messageInput.value.trim();
+            
+            if (messageText) {
+                const newMessage = {
+                    author: currentUser.name,
+                    role: currentUser.role,
+                    text: messageText,
+                    time: new Date().toLocaleTimeString(),
+                    username: currentUser.username
+                };
+                
+                // Clear input immediately for better UX
+                messageInput.value = '';
+                
+                // Save to Firebase
+                await saveMessage(newMessage);
+            }
+        });
+
+        // Update connection status
+        function updateConnectionStatus(connected) {
+            const statusElement = document.getElementById('connectionStatus');
+            if (connected) {
+                statusElement.className = 'connection-status connected';
+                statusElement.innerHTML = '<i class="fas fa-wifi"></i> Connected';
+            } else {
+                statusElement.className = 'connection-status disconnected';
+                statusElement.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Disconnected';
+            }
+        }
+
+        // Quick action functions
+        function showMarketUpdate() {
+            alert('Market Update: S&P 500 up 0.8%, NASDAQ up 1.2%. Tech sector leading gains.');
+        }
+        
+        function showPortfolioStatus() {
+            alert('Portfolio Status: Current AUM $500k, YTD return +10.2%, Max drawdown -8.3%');
+        }
+        
+        function showResearchNotes() {
+            alert('Research Notes: 3 new equity reports in progress, 2 macro analysis updates due this week.');
+        }
+        
+        function showMeetingSchedule() {
+            alert('Meeting Schedule: Weekly team meeting tomorrow 2 PM, Monthly review next Friday 10 AM.');
+        }
+        
+        // Logout function
+        function logout() {
+            if (unsubscribe) {
+                unsubscribe(); // Stop listening to Firebase
+            }
+            localStorage.removeItem('eonUserSession');
+            window.location.href = 'login.html';
+        }
+        
+        // Initialize dashboard
+        async function initializeDashboard() {
+            try {
+                currentUser = checkAuth();
+                populateUsers();
+                
+                // Wait for Firebase to be ready
+                await waitForFirebase();
+                console.log('Firebase is ready!');
+                
+                // Load messages
+                await loadMessages();
+                
+                updateConnectionStatus(true);
+            } catch (error) {
+                console.error('Failed to initialize dashboard:', error);
+                showError('Failed to initialize: ' + error.message);
+            }
+        }
+        
+        // Start initialization
+        initializeDashboard();
+        
+        // Auto-refresh online status every 30 seconds
+        setInterval(() => {
+            // Simulate random online/offline status changes
+            teamMembers.forEach(member => {
+                if (Math.random() > 0.8) {
+                    member.online = !member.online;
+                }
+            });
+            populateUsers();
+        }, 30000);
+    </script>
+</body>
+</html> 
