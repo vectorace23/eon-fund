@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Serif+Pro:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    
     <style>
         body {
             background: #f8f7f3;
@@ -324,6 +329,27 @@
             border-color: #d4af37;
         }
         
+        .connection-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 1000;
+        }
+        
+        .connection-status.connected {
+            background: #10b981;
+            color: white;
+        }
+        
+        .connection-status.disconnected {
+            background: #ef4444;
+            color: white;
+        }
+        
         @media (max-width: 768px) {
             .dashboard-container {
                 grid-template-columns: 1fr;
@@ -352,6 +378,11 @@
     </style>
 </head>
 <body>
+    <!-- Connection Status Indicator -->
+    <div id="connectionStatus" class="connection-status disconnected">
+        <i class="fas fa-wifi"></i> Connecting...
+    </div>
+
     <header class="dashboard-header">
         <nav class="dashboard-nav">
             <div class="dashboard-logo">
@@ -397,9 +428,9 @@
         </aside>
 
         <main class="main-content">
-                    <div class="chat-header">
-            <h2><i class="fas fa-comments"></i> Team Chat <span id="messageCount" class="message-count">(0)</span></h2>
-        </div>
+            <div class="chat-header">
+                <h2><i class="fas fa-comments"></i> Team Chat <span id="messageCount" class="message-count">(0)</span></h2>
+            </div>
             
             <div class="chat-messages" id="chatMessages">
                 <!-- Messages will be populated here -->
@@ -423,6 +454,21 @@
     </div>
 
     <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCJNU4lHbW5z1VLnO7xRbe6VPKqjMs4dGc",
+            authDomain: "eon-cap-chat.firebaseapp.com",
+            projectId: "eon-cap-chat",
+            storageBucket: "eon-cap-chat.firebasestorage.app",
+            messagingSenderId: "277984889021",
+            appId: "1:277984889021:web:b7e69c310e159079a7cfd4",
+            measurementId: "G-6EY6KZER45"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
         // Check authentication
         function checkAuth() {
             const session = localStorage.getItem('eonUserSession');
@@ -437,10 +483,10 @@
             
             return userData;
         }
-        
+
         // Initialize dashboard
         const currentUser = checkAuth();
-        
+
         // Team members data
         const teamMembers = [
             { username: 'ronin', name: 'Ronin Lee', role: 'Principal', online: true },
@@ -451,7 +497,7 @@
             { username: 'kelly', name: 'Kelly Parker', role: 'Analyst', online: true },
             { username: 'anirudh', name: 'Anirudh Guduru', role: 'Analyst', online: false }
         ];
-        
+
         // Populate users list
         function populateUsers() {
             const usersList = document.getElementById('usersList');
@@ -471,46 +517,47 @@
                 usersList.appendChild(userItem);
             });
         }
-        
-        // Chat functionality
+
+        // Chat functionality with Firebase
         let messages = [];
-        
-        // Load messages from localStorage
+        let unsubscribe = null;
+
+        // Load messages from Firebase
         function loadMessages() {
-            const savedMessages = localStorage.getItem('eonChatMessages');
-            if (savedMessages) {
-                messages = JSON.parse(savedMessages);
-            } else {
-                // Initialize with welcome messages if no messages exist
-                messages = [
-                    {
-                        id: Date.now() - 3600000,
-                        author: 'Ronin Lee',
-                        role: 'Principal',
-                        text: 'Welcome everyone to the EON internal platform! Let\'s make this our central hub for collaboration.',
-                        time: new Date(Date.now() - 3600000).toLocaleTimeString(),
-                        username: 'ronin',
-                        timestamp: Date.now() - 3600000
-                    },
-                    {
-                        id: Date.now() - 3000000,
-                        author: 'Antony Pfaffle',
-                        role: 'President',
-                        text: 'Great initiative! This will help us stay connected and share insights more effectively.',
-                        time: new Date(Date.now() - 3000000).toLocaleTimeString(),
-                        username: 'antony',
-                        timestamp: Date.now() - 3000000
-                    }
-                ];
-                saveMessages();
+            // Listen for real-time updates
+            unsubscribe = db.collection('eon-chat')
+                .orderBy('timestamp', 'asc')
+                .onSnapshot((snapshot) => {
+                    messages = [];
+                    snapshot.forEach((doc) => {
+                        messages.push({ id: doc.id, ...doc.data() });
+                    });
+                    displayMessages();
+                    updateConnectionStatus(true);
+                }, (error) => {
+                    console.error("Error loading messages:", error);
+                    updateConnectionStatus(false);
+                });
+        }
+
+        // Save message to Firebase
+        async function saveMessage(messageData) {
+            try {
+                await db.collection('eon-chat').add({
+                    author: messageData.author,
+                    role: messageData.role,
+                    text: messageData.text,
+                    time: messageData.time,
+                    username: messageData.username,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            } catch (error) {
+                console.error("Error saving message:", error);
+                alert('Failed to send message. Please try again.');
             }
         }
-        
-        // Save messages to localStorage
-        function saveMessages() {
-            localStorage.setItem('eonChatMessages', JSON.stringify(messages));
-        }
-        
+
+        // Display messages
         function displayMessages() {
             const chatMessages = document.getElementById('chatMessages');
             chatMessages.innerHTML = '';
@@ -522,13 +569,15 @@
                 const messageDiv = document.createElement('div');
                 messageDiv.className = `message ${message.username === currentUser.username ? 'own-message' : ''}`;
                 
+                const time = message.time || (message.timestamp ? new Date(message.timestamp.toDate()).toLocaleTimeString() : 'Just now');
+                
                 messageDiv.innerHTML = `
                     <div class="message-avatar">${message.author.charAt(0)}</div>
                     <div class="message-content">
                         <div class="message-header">
                             <span class="message-author">${message.author}</span>
                             <span class="message-role">${message.role}</span>
-                            <span class="message-time">${message.time}</span>
+                            <span class="message-time">${time}</span>
                         </div>
                         <div class="message-text">${message.text}</div>
                     </div>
@@ -540,9 +589,9 @@
             // Scroll to bottom
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
-        
+
         // Handle chat form submission
-        document.getElementById('chatForm').addEventListener('submit', function(e) {
+        document.getElementById('chatForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const messageInput = document.getElementById('messageInput');
@@ -550,22 +599,33 @@
             
             if (messageText) {
                 const newMessage = {
-                    id: Date.now(),
                     author: currentUser.name,
                     role: currentUser.role,
                     text: messageText,
                     time: new Date().toLocaleTimeString(),
-                    username: currentUser.username,
-                    timestamp: Date.now()
+                    username: currentUser.username
                 };
                 
-                messages.push(newMessage);
-                saveMessages(); // Save to localStorage
-                displayMessages();
+                // Clear input immediately for better UX
                 messageInput.value = '';
+                
+                // Save to Firebase
+                await saveMessage(newMessage);
             }
         });
-        
+
+        // Update connection status
+        function updateConnectionStatus(connected) {
+            const statusElement = document.getElementById('connectionStatus');
+            if (connected) {
+                statusElement.className = 'connection-status connected';
+                statusElement.innerHTML = '<i class="fas fa-wifi"></i> Connected';
+            } else {
+                statusElement.className = 'connection-status disconnected';
+                statusElement.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Disconnected';
+            }
+        }
+
         // Quick action functions
         function showMarketUpdate() {
             alert('Market Update: S&P 500 up 0.8%, NASDAQ up 1.2%. Tech sector leading gains.');
@@ -585,20 +645,16 @@
         
         // Logout function
         function logout() {
+            if (unsubscribe) {
+                unsubscribe(); // Stop listening to Firebase
+            }
             localStorage.removeItem('eonUserSession');
             window.location.href = 'login.html';
         }
         
         // Initialize dashboard
-        loadMessages(); // Load saved messages first
         populateUsers();
-        displayMessages();
-        
-        // Auto-refresh messages every 5 seconds to check for new messages
-        setInterval(() => {
-            loadMessages();
-            displayMessages();
-        }, 5000);
+        loadMessages();
         
         // Auto-refresh online status every 30 seconds
         setInterval(() => {
