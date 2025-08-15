@@ -91,6 +91,21 @@ h1, h2, h3, h4, h5, h6 {
     color: #d4af37;
 }
 
+.internal-link {
+    background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
+    color: #14223d !important;
+    padding: 0.5rem 1rem !important;
+    border-radius: 20px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.internal-link:hover {
+    background: linear-gradient(135deg, #b8860b 0%, #d4af37 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
 .hamburger {
     display: none;
     flex-direction: column;
